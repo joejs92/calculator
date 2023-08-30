@@ -1,0 +1,51 @@
+html {
+    height: 100%;
+}
+
+.body {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.calculator {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 500px;
+    background-color: lightgray;
+    
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    flex: auto;
+}
+
+.row {
+    display: flex;
+    flex: auto;
+    justify-content: space-evenly;
+}
+
+button {
+    display: flex;
+    flex: auto;
+    align-items: center;
+    justify-content: center;
+    font-size: large;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+}
+
+input {
+    display: flex;
+    height: 100%;
+}

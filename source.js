@@ -1,22 +1,3 @@
-const add = function(num1,num2) {
-	let prod = num1 + num2;
-    result(prod);
-};
-
-const sub = function(num1,num2) {
-	let prod = num1 - num2;
-    result(prod);
-};
-
-const mult = function(num1,num2) {
-	let prod = num1 * num2;
-    result(prod);
-};
-
-const div = function(num1,num2) {
-	let prod = num1 / num2;
-    result(prod);
-};
 
 const clear = function(){
     displayVal = "";
@@ -44,16 +25,20 @@ const start = function(displayVal){
 
 const operate = function(num1,operator,num2) {
     if (operator == '+'){
-        add(num1,num2);
+        let prod = num1 + num2;
+        return prod;
     }
     else if (operator == '-'){
-        sub(num1,num2);
+        let prod = num1 - num2;
+        return prod;
     }
     else if (operator == '*'){
-        mult(num1,num2);
+        let prod = num1 * num2;
+        return prod;
     }
     else if (operator == '/'){
-        div(num1,num2);
+        let prod = num1 / num2;
+        return prod;
     }
 }
 
@@ -73,28 +58,40 @@ const getVal = function(displayVal) {
     let arr = displayVal.split("");
     let nums = ['0','1','2','3','4','5','6','7','8','9']
     let operators = ['+','-','/','*']
-    let num12 = "";
-    let operator = "";
-    let num22 = "";
+    let numbers = [];
+    let ops = [];
+    let num = "";
+    const len = arr.length;
     for (let i in arr) {
-      if(nums.includes(arr[i]) && operator == ""){
-            num12 += arr[i];
+        if(nums.includes(arr[i])){
+            num += arr[i];
+            if (i == len-1) {
+                numbers.push(num);
+            }
         }
         else if(operators.includes(arr[i])){
-          operator += arr[i];
-        }
-        else if(nums.includes(arr[i]) && operator != ""){
-          num22 += arr[i];
+          ops.push(arr[i]);
+          numbers.push(num);
+          num = "";
         }
     }
-    let num1 = Number(num12);
-    let num2 = Number(num22);
-    operate(num1,operator,num2);
+    calc(numbers,ops);
+}
+
+const calc = function(numbers,ops){
+    let num1 = Number(numbers[0]);
+    let prod = 0;
+    for (let i = 1; i < numbers.length; i++) {
+        let num2 = Number(numbers[i]);
+        let operator = ops[i-1];
+        prod = operate(num1,operator,num2);
+        num1 = prod;
+    }
+    result(prod);
 }
 
 let displayVal = "";
 start(displayVal);
-
 
 const buttons = document.querySelectorAll('button');
 buttons.forEach((button) => {

@@ -51,7 +51,7 @@ const result = function(prod) {
     valUpdate.id = "displayVal";
     val1.appendChild(valUpdate);
     valUpdate.textContent = `${prod}`;
-    displayVal = prod;
+    displayVal = prod.toString();
 }
 
 const getVal = function(displayVal) {
@@ -70,22 +70,39 @@ const getVal = function(displayVal) {
             }
         }
         else if(operators.includes(arr[i])){
-          ops.push(arr[i]);
-          numbers.push(num);
-          num = "";
+            if(i == 0){
+                num += arr[i];
+            }
+            else{
+                ops.push(arr[i]);
+                numbers.push(num);
+                num = "";
+            }
         }
     }
+
     calc(numbers,ops);
+    
 }
 
 const calc = function(numbers,ops){
     let num1 = Number(numbers[0]);
     let prod = 0;
-    for (let i = 1; i < numbers.length; i++) {
-        let num2 = Number(numbers[i]);
-        let operator = ops[i-1];
-        prod = operate(num1,operator,num2);
-        num1 = prod;
+    if(numbers.includes("")){
+        prod = "Error";
+    }
+    else{
+        for (let i = 1; i < numbers.length; i++) {
+            let num2 = Number(numbers[i]);
+            let operator = ops[i-1];
+            if(operator == "/" && num2 == 0){
+                prod = "You can't do that, dumbass";
+            }
+            else{
+                prod = operate(num1,operator,num2);
+                num1 = prod;
+            }
+        }
     }
     result(prod);
 }
@@ -97,9 +114,11 @@ const buttons = document.querySelectorAll('button');
 buttons.forEach((button) => {
     button.addEventListener('click',() => {
         buttonSelection = button.id;
-        if (buttonSelection != "clear" && buttonSelection != "=") {
+        console.log(displayVal);
+        if (buttonSelection != "clear" && buttonSelection != "=" && displayVal.length < 33) {
             displayVal += buttonSelection; 
             update(displayVal);
+            
         }
         else if (buttonSelection == "clear") {
             clear();
